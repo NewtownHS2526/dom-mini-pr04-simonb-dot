@@ -1,39 +1,69 @@
 console.log("Script Running");
 
-// Create a helper function that moves a penguin across the grid
-// The function should accept a penguin element and a column position
-// Only allow movement while the column is less than or equal to 6
+// Helper function to move a penguin across the grid
+const movePenguin = (penguin, column) => {
+  if (column <= 6) {
+    penguin.style.setProperty("grid-column", column);
+  }
+};
 
+// Initialize position variables for each penguin
+let tux_position = 1;
+let daisy_position = 1;
+let rocky_position = 1;
 
+// Query selectors for all buttons and penguins
+const tuxBtn = document.querySelector("#tux-btn");
+const daisyBtn = document.querySelector("#daisy-btn");
+const rockyBtn = document.querySelector("#rocky-btn");
 
-// Create position variables for each penguin and set them all to 1
+const tuxPenguin = document.querySelector("#tux-penguin");
+const daisyPenguin = document.querySelector("#daisy-penguin");
+const rockyPenguin = document.querySelector("#rocky-penguin");
 
+const winnerBox = document.querySelector("#winner-box");
 
+// Finish line position (column 6)
+const finishLine = 6;
 
-// Query selectors for all buttons and penguins go here
+// Function to move Tux forward
+const moveTux = () => {
+  tux_position += 1;
+  movePenguin(tuxPenguin, tux_position);
+  checkWinner(tux_position, "Tux");
+};
 
+// Function to move Daisy forward
+const moveDaisy = () => {
+  daisy_position += 1;
+  movePenguin(daisyPenguin, daisy_position);
+  checkWinner(daisy_position, "Daisy");
+};
 
+// Function to move Rocky forward
+const moveRocky = () => {
+  rocky_position += 1;
+  movePenguin(rockyPenguin, rocky_position);
+  checkWinner(rocky_position, "Rocky");
+};
 
-// Write the function that moves Tux forward
-// Increase the tux position
-// Call the helper function to update the penguin position
-// Call the winner check function
+// Function to check if a penguin has reached column 6 (finish line)
+const checkWinner = (position, penguinName) => {
+  if (position >= finishLine) {
+    winnerBox.textContent = `${penguinName} got the fish! 🐟`;
+    alert(`${penguinName} got the fish! 🐟`);
+    disableButtons(); // Disable all buttons after a winner is found
+  }
+};
 
-
-
-// Write the function that moves Daisy forward
-
-
-
-// Write the function that moves Rocky forward
-
-
-
-// Write a function that checks if a penguin reached column 6
-// If so, display the winner message (example: "Tux got the fish! 🐟")
-// Disable all buttons when a winner is found
-
-
+// Function to disable all buttons after a winner is found
+const disableButtons = () => {
+  tuxBtn.disabled = true;
+  daisyBtn.disabled = true;
+  rockyBtn.disabled = true;
+};
 
 // Add event listeners for each button
-// Each button should trigger its own movement function
+tuxBtn.addEventListener("click", moveTux);
+daisyBtn.addEventListener("click", moveDaisy);
+rockyBtn.addEventListener("click", moveRocky);
